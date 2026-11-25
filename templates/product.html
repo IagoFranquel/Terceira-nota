@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="detail">
+  <img src="{{ p.imagem or 'https://placehold.co/400x300?text=Sem+imagem' }}" alt="{{ p.nome }}">
+  <div>
+    <h1>{{ p.nome }}</h1>
+    <p class="muted">{{ p.categoria }}</p>
+    <p>{{ p.descricao }}</p>
+    {% if p.atributos %}<ul>{% for k, v in p.atributos.items() %}<li><b>{{ k }}:</b> {{ v }}</li>{% endfor %}</ul>{% endif %}
+    <p class="price">R$ {{ p.preco|brl }}</p>
+    <p class="muted">Estoque: {{ p.estoque }}</p>
+    <form method="post" action="{{ url_for('cart_add', pid=p._id) }}"><button>Adicionar ao carrinho</button></form>
+  </div>
+</div>
+{% endblock %}

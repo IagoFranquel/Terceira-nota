@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% macro card(p) %}
+<div class="card">
+  <a href="{{ url_for('product_detail', pid=p._id) }}">
+    <img src="{{ p.imagem or 'https://placehold.co/300x200?text=Sem+imagem' }}" alt="{{ p.nome }}">
+    <h3>{{ p.nome }}</h3>
+  </a>
+  <p class="price">R$ {{ p.preco|brl }}</p>
+  <form method="post" action="{{ url_for('cart_add', pid=p._id) }}"><button>Adicionar ao carrinho</button></form>
+</div>
+{% endmacro %}
+{% block content %}
+<form class="search" method="get"><input name="q" value="{{ q }}" placeholder="Buscar produto..."><button>Buscar</button></form>
+<small class="muted">Fonte: {{ 'cache Redis ⚡' if from_cache else 'MongoDB' }}</small>
+{% if recent %}
+<h2>Vistos recentemente (Redis)</h2>
+<div class="grid">{% for p in recent %}{{ card(p) }}{% endfor %}</div>
+{% endif %}
+<h2>Produtos</h2>
+<div class="grid">
+{% for p in items %}{{ card(p) }}{% else %}<p>Nenhum produto cadastrado.</p>{% endfor %}
+</div>
+{% endblock %}

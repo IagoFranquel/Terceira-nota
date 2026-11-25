@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Painel Administrativo</h1>
+<p class="muted">Logado como {{ session.admin.email }}</p>
+<form class="form" method="post">
+  <h2>Novo produto</h2>
+  <label>Nome * <input name="nome" required></label>
+  <label>Descrição <textarea name="descricao" rows="3"></textarea></label>
+  <label>Preço (R$) * <input name="preco" required placeholder="49,90"></label>
+  <label>URL da imagem <input name="imagem" type="url"></label>
+  <label>Categoria <input name="categoria"></label>
+  <label>Estoque <input name="estoque" type="number" min="0" value="0"></label>
+  <label>Atributos extras (um por linha, chave=valor)
+    <textarea name="atributos" rows="3" placeholder="cor=Azul&#10;tamanho=M"></textarea></label>
+  <button>Cadastrar</button>
+</form>
+<h2>Produtos cadastrados</h2>
+<table>
+<tr><th>Nome</th><th>Preço</th><th>Estoque</th><th></th></tr>
+{% for p in items %}
+<tr><td>{{ p.nome }}</td><td>R$ {{ p.preco|brl }}</td><td>{{ p.estoque }}</td>
+<td><form class="inline" method="post" action="{{ url_for('admin_delete', pid=p._id) }}"><button class="danger">Excluir</button></form></td></tr>
+{% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Carrinho</h1>
+{% if lines %}
+<table>
+<tr><th>Produto</th><th>Preço</th><th>Qtd</th><th>Subtotal</th><th></th></tr>
+{% for l in lines %}
+<tr>
+  <td>{{ l.p.nome }}</td>
+  <td>R$ {{ l.p.preco|brl }}</td>
+  <td>
+    <form class="inline" method="post" action="{{ url_for('cart_remove', pid=l.p._id) }}"><button>−</button></form>
+    {{ l.qty }}
+    <form class="inline" method="post" action="{{ url_for('cart_add', pid=l.p._id) }}"><button>+</button></form>
+  </td>
+  <td>R$ {{ l.sub|brl }}</td>
+  <td><form class="inline" method="post" action="{{ url_for('cart_delete', pid=l.p._id) }}"><button class="danger">Remover</button></form></td>
+</tr>
+{% endfor %}
+</table>
+<h2>Total: R$ {{ total|brl }}</h2>
+<form method="post" action="{{ url_for('checkout') }}"><button class="big">Comprar via WhatsApp</button></form>
+{% else %}<p>Seu carrinho está vazio.</p>{% endif %}
+{% endblock %}
