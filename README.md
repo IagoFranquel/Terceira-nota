@@ -1,5 +1,7 @@
 # Loja Poliglota (Flask)
 
+Aluno: Iago Frânquel Freitas Sousa - Quarto período - Manhã
+
 | Banco | Uso |
 |---|---|
 | Supabase (PostgreSQL) | Login do admin (Auth), tabela `admins` (RLS), `audit_log` |
